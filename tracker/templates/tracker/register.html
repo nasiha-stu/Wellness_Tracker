@@ -1,0 +1,42 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+
+<h2>Create your Wellness Tracker account 🌱</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+   {% if form.errors %}
+        <p>Please fix the following:</p>
+        {{ form.errors }}
+    {% endif %}
+
+
+    <label>Username:</label>
+    {{ form.username }}
+
+    <br>
+
+    <label>Password:</label>
+    {{ form.password1 }}
+
+    <br>
+
+    <label>Confirm Password:</label>
+    {{ form.password2 }}
+
+    <br>
+
+    <button type="submit">
+        Create Account
+    </button>
+
+</form>
+
+{% endblock %}
