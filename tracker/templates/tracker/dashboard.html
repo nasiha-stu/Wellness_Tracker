@@ -7,20 +7,158 @@ Dashboard
 
 {% block content %}
 
-<h2>Welcome to your Wellness Dashboard 🌱</h2>
+<style>
+
+.progress-container {
+    width: 50%;
+    background-color: lightgray;
+    height: 25px;
+    border-radius: 10px;
+}
+
+.progress-bar {
+    height: 25px;
+    background-color: green;
+    border-radius: 10px;
+}
+
+.progress-wrapper {
+    display: flex;
+}
+
+.dashboard-card {
+
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+}
+.dashboard-container {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+</style>
+
+<h2>Welcome back, {{ username }} 🌱</h2>
 
 <p>
-    Track your habits, progress, and take care of yourself.
+    Track your habits, build healthy routines, and take care of yourself.
 </p>
 
-<h3>Your Wellness Areas</h3>
 
-<ul>
-    <li>💧 Hydration</li>
-    <li>😴 Sleep</li>
-    <li>🏋 Fitness</li>
-    <li>📚 Study</li>
-    <li>📝 Reflection</li>
-</ul>
+<h3>Your Wellness Overview</h3>
+
+
+<div class="dashboard-card">
+
+    <h4>💧 Hydration</h4>
+
+<p>Track your daily water intake.</p>
+
+<p>
+    Today:
+    <strong>
+        {{ total_water }} ml / {{ water_goal }} ml
+    </strong>
+</p>
+
+<div class="progress-wrapper">
+
+    <div class="progress-container">
+
+        <div class="progress-bar"
+             data-progress="{{ progress_percentage }}">
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const progressBar = document.querySelector(".progress-bar");
+
+if (progressBar) {
+    const progress = progressBar.dataset.progress;
+    progressBar.style.width = progress + "%";
+}
+
+</script>
+
+<p>
+    {{ progress_message }}
+</p>
+
+<a href="{% url 'hydration' %}">
+    Open Hydration Tracker
+</a>
+
+</div>
+
+
+<div class="dashboard-card">
+
+    <h4>😴 Sleep</h4>
+
+    <p>
+        Track your sleep and understand your patterns.
+    </p>
+
+    <p>
+        <strong>Last night:</strong>
+
+        {% if last_night_sleep %}
+            {{ last_night_sleep.hours_slept }} hours
+        {% else %}
+            No sleep data yet.
+        {% endif %}
+    </p>
+
+    <p>
+        <strong>Weekly average:</strong>
+
+        {% if average_sleep %}
+            {{ average_sleep }} hours
+        {% else %}
+            No sleep data yet.
+        {% endif %}
+    </p>
+
+    <a href="{% url 'sleep' %}">
+        Open Sleep Tracker
+    </a>
+
+</div>
+
+
+<div class="dashboard-card">
+
+    <h4>🏋 Fitness</h4>
+    <p>Record workouts and movement.</p>
+
+</div>
+
+
+<div class="dashboard-card">
+
+    <h4>📚 Study</h4>
+    <p>Track your focus time and productivity.</p>
+
+</div>
+
+
+<div class="dashboard-card">
+
+    <h4>📝 Reflection</h4>
+    <p>Write thoughts, goals, and daily reflections.</p>
+
+</div>
+
 
 {% endblock %}

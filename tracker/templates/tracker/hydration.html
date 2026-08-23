@@ -1,0 +1,172 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Hydration
+{% endblock %}
+
+
+{% block content %}
+
+<h2>💧 Hydration Tracker</h2>
+
+<p>Track your daily water intake.</p>
+
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Save Water Intake
+    </button>
+
+</form>
+
+<hr>
+
+<h3>Today's Entries 💧</h3>
+
+{% for entry in entries %}
+
+    <div class="hydration-entry">
+
+    <div class="hydration-entry-header">
+
+        <span class="hydration-icon">
+            {% if entry.drink_type == "Water" %}
+                💧
+            {% elif entry.drink_type == "Coffee" %}
+                ☕
+            {% elif entry.drink_type == "Tea" %}
+                🍵
+            {% endif %}
+        </span>
+
+        <div>
+
+            <h4>
+                {{ entry.drink_type }}
+            </h4>
+
+            <p class="hydration-date">
+                {{ entry.date|date:"F j, Y • g:i A" }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="hydration-info">
+
+        <strong>
+            {{ entry.amount }} {{ entry.unit }}
+        </strong>
+
+    </div>
+
+
+    <div class="hydration-actions">
+
+        <a
+            href="{% url 'edit_hydration' entry.id %}"
+            class="edit-button"
+        >
+            ✏️ Edit
+        </a>
+
+        <a
+            href="{% url 'delete_hydration' entry.id %}"
+            class="delete-button"
+        >
+            🗑 Delete
+        </a>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+    <p>No hydration entries yet.</p>
+
+{% endfor %}
+
+<style>
+
+.hydration-entry {
+    width: 50%;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+
+.hydration-entry-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.hydration-icon {
+    font-size: 30px;
+}
+
+
+.hydration-entry h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+
+.hydration-date {
+    margin: 4px 0 0;
+    color: #777;
+    font-size: 14px;
+}
+
+
+.hydration-info {
+    margin-top: 15px;
+}
+
+
+.hydration-info strong {
+    font-size: 22px;
+}
+
+
+.hydration-actions {
+    margin-top: 18px;
+    display: flex;
+    gap: 10px;
+}
+
+
+.edit-button,
+.delete-button {
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+
+.edit-button {
+    background-color: #e8f0fe;
+}
+
+
+.delete-button {
+    background-color: #fde8e8;
+}
+
+</style>
+
+{% endblock %}

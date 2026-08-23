@@ -1,0 +1,36 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Edit Sleep
+{% endblock %}
+
+
+{% block content %}
+
+<h2>😴 Edit Sleep</h2>
+
+<p>
+    Update your sleep entry.
+</p>
+
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+
+    <button type="submit">
+        Save Changes
+    </button>
+
+</form>
+
+
+<a href="{% url 'sleep' %}">
+    Cancel
+</a>
+
+
+{% endblock %}

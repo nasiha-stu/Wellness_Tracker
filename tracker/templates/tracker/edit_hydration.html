@@ -1,0 +1,36 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Edit Hydration
+{% endblock %}
+
+
+{% block content %}
+
+<h2>💧 Edit Hydration</h2>
+
+<p>
+    Update your hydration entry.
+</p>
+
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+
+    <button type="submit">
+        Save Changes
+    </button>
+
+</form>
+
+
+<a href="{% url 'hydration' %}">
+    Cancel
+</a>
+
+
+{% endblock %}

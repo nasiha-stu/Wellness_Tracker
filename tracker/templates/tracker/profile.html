@@ -1,0 +1,31 @@
+{% extends "tracker/layout.html" %}
+
+
+{% block title %}
+Profile
+{% endblock %}
+
+
+{% block content %}
+
+<h2>🌱 Your Wellness Goals</h2>
+
+<p>
+Set your daily water goal.
+</p>
+
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Save Goal
+    </button>
+
+</form>
+
+
+{% endblock %}
