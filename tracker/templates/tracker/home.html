@@ -6,14 +6,377 @@ Home
 
 {% block content %}
 
-<h2>Welcome to Wellness Tracker 🌱</h2>
+<style>
 
-<p>
-    Build healthy habits, track your progress, and take care of yourself.
-</p>
+.home-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
 
-<p>
-    <a href="{% url 'register' %}">Create Account</a>
-</p>
+
+/* =========================
+   HERO
+========================= */
+
+.home-hero {
+
+    background-color: white;
+
+    border-radius: 22px;
+
+    padding: 60px 40px;
+
+    text-align: center;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.06);
+
+    margin-bottom: 30px;
+}
+
+
+.home-icon {
+
+    font-size: 50px;
+
+    margin-bottom: 10px;
+}
+
+
+.home-hero h2 {
+
+    color: #36583a;
+
+    font-size: 32px;
+
+    margin: 0 0 15px;
+}
+
+
+.home-hero p {
+
+    color: #687568;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    max-width: 600px;
+
+    margin: 0 auto 30px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.home-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+.home-button {
+
+    display: inline-block;
+
+    padding: 12px 22px;
+
+    border-radius: 11px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.home-button:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.primary-button {
+
+    background-color: #557a58;
+
+    color: white;
+}
+
+
+.primary-button:hover {
+
+    background-color: #456748;
+}
+
+
+.secondary-button {
+
+    background-color: #edf5ed;
+
+    color: #456748;
+}
+
+
+.secondary-button:hover {
+
+    background-color: #e1eee1;
+}
+
+
+/* =========================
+   FEATURE CARDS
+========================= */
+
+.home-features {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+
+.feature-card {
+
+    background-color: white;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+
+.feature-icon {
+
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+
+.feature-card h3 {
+
+    color: #36583a;
+
+    margin: 5px 0 8px;
+}
+
+
+.feature-card p {
+
+    color: #748074;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin: 0;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .home-hero {
+
+        padding: 45px 25px;
+    }
+
+    .home-hero h2 {
+
+        font-size: 27px;
+    }
+
+    .home-features {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+
+<div class="home-page">
+
+
+    {% if user.is_authenticated %}
+
+
+        <!-- LOGGED IN -->
+
+        <div class="home-hero">
+
+            <div class="home-icon">
+                🌱
+            </div>
+
+            <h2>
+                Welcome back!
+            </h2>
+
+            <p>
+                Keep building healthy habits, tracking your progress,
+                and taking care of yourself one day at a time.
+            </p>
+
+
+            <div class="home-buttons">
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="home-button primary-button">
+
+                    Go to Dashboard
+
+                </a>
+
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="home-button secondary-button">
+
+                    View Your Goals
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- LOGGED OUT -->
+
+        <div class="home-hero">
+
+            <div class="home-icon">
+                🌱
+            </div>
+
+            <h2>
+                Welcome to Wellness Tracker
+            </h2>
+
+            <p>
+                Build healthy habits, track your progress,
+                and take a little time each day to take care of yourself.
+            </p>
+
+
+            <div class="home-buttons">
+
+                <a
+                    href="{% url 'register' %}"
+                    class="home-button primary-button">
+
+                    Create Account
+
+                </a>
+
+
+                <a
+                    href="{% url 'login' %}"
+                    class="home-button secondary-button">
+
+                    Login
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+    {% endif %}
+
+
+    <!-- FEATURES -->
+
+    <div class="home-features">
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                💧
+            </div>
+
+            <h3>
+                Hydration
+            </h3>
+
+            <p>
+                Keep track of your daily water intake
+                and stay hydrated.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🏃‍♀️
+            </div>
+
+            <h3>
+                Fitness
+            </h3>
+
+            <p>
+                Track your activity and work toward
+                your personal fitness goals.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🌿
+            </div>
+
+            <h3>
+                Reflection
+            </h3>
+
+            <p>
+                Take a moment to check in with yourself
+                and write down what's on your mind.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</div>
 
 {% endblock %}

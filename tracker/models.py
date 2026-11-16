@@ -105,5 +105,168 @@ class Profile(models.Model):
         default=2000
     )
 
+    fitness_goal = models.PositiveIntegerField(
+        default=30
+)
+
+    fitness_goal_type = models.CharField(
+        max_length=10,
+        choices=[
+            ("daily", "Daily"),
+            ("weekly", "Weekly"),
+    ],
+    default="daily"
+    )
+    fitness_goal_unit = models.CharField(
+    max_length=10,
+    choices=[
+        ("minutes", "Minutes"),
+        ("hours", "Hours"),
+    ],
+    default="minutes"
+)
+    study_goal = models.FloatField(
+    default=60
+)
+
+    study_goal_unit = models.CharField(
+        max_length=10,
+        choices=[
+            ("minutes", "Minutes"),
+            ("hours", "Hours"),
+    ],
+    default="minutes"
+)
+
+    study_goal_type = models.CharField(
+        max_length=10,
+        choices=[
+            ("daily", "Daily"),
+            ("weekly", "Weekly"),
+    ],
+    default="daily"
+)
     def __str__(self):
         return self.user.username
+
+class Fitness(models.Model):
+
+
+    ACTIVITY_CHOICES = [
+        ("Walking", "🚶‍♀️ Walking"),
+        ("Running", "🏃‍♀️ Running"),
+        ("Cycling", "🚴‍♀️ Cycling"),
+        ("Workout", "🏋️‍♀️ Workout"),
+        ("Other", "✨ Other"),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    activity = models.CharField(
+        max_length=20,
+        choices=ACTIVITY_CHOICES
+    )
+
+    duration = models.DecimalField(
+    max_digits=5,
+    decimal_places=1
+)
+
+    unit = models.CharField(
+        max_length=10,
+        choices=[
+            ("minutes", "Minutes"),
+            ("hours", "Hours"),
+        ],
+        default="minutes"
+    )
+
+    date = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"{self.user.username} - {self.activity} - {self.duration} {self.unit}"
+
+class Study(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    subject = models.CharField(
+        max_length=100
+    )
+
+    duration = models.FloatField()
+
+    unit = models.CharField(
+        max_length=10,
+        choices=[
+            ("minutes", "Minutes"),
+            ("hours", "Hours"),
+        ],
+        default="minutes"
+    )
+
+    date = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def duration_display(self):
+
+        total_minutes = 0
+
+        if self.unit == "minutes":
+            total_minutes = float(self.duration)
+
+        elif self.unit == "hours":
+            total_minutes = float(self.duration) * 60
+
+        hours = int(total_minutes // 60)
+        minutes = int(total_minutes % 60)
+
+        if hours and minutes:
+            return f"{hours}h {minutes}m"
+
+        elif hours:
+            return f"{hours}h"
+
+        else:
+            return f"{minutes}m"
+
+    def __str__(self):
+        return f"{self.user.username} - {self.subject} - {self.duration} {self.unit}"
+
+class Reflection(models.Model):
+
+    FEELING_CHOICES = [
+        ("great", "😊 Great"),
+        ("good", "🙂 Good"),
+        ("okay", "😐 Okay"),
+        ("low", "😔 Low"),
+        ("difficult", "😣 Difficult"),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    feeling = models.CharField(
+        max_length=20,
+        choices=FEELING_CHOICES
+    )
+
+    text = models.TextField()
+
+    date = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"{self.user.username} - {self.date}"

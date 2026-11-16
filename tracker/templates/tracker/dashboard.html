@@ -20,6 +20,7 @@ Dashboard
     height: 25px;
     background-color: green;
     border-radius: 10px;
+    width: 0;
 }
 
 .progress-wrapper {
@@ -45,7 +46,7 @@ Dashboard
 }
 </style>
 
-<h2>Welcome back, {{ username }} 🌱</h2>
+<h2>Welcome back, 🌱</h2>
 
 <p>
     Track your habits, build healthy routines, and take care of yourself.
@@ -82,12 +83,15 @@ Dashboard
 
 <script>
 
-const progressBar = document.querySelector(".progress-bar");
+const progressBars = document.querySelectorAll(".progress-bar");
 
-if (progressBar) {
+progressBars.forEach(function(progressBar) {
+
     const progress = progressBar.dataset.progress;
+
     progressBar.style.width = progress + "%";
-}
+
+});
 
 </script>
 
@@ -139,16 +143,171 @@ if (progressBar) {
 
 <div class="dashboard-card">
 
-    <h4>🏋 Fitness</h4>
-    <p>Record workouts and movement.</p>
+    <h4>🏃‍♀️ Fitness</h4>
+
+    <p>
+        Track your physical activity and keep moving!
+    </p>
+
+
+    <p>
+        <strong>
+            {% if fitness_goal_type == "daily" %}
+                Today:
+            {% else %}
+                This week:
+            {% endif %}
+        </strong>
+
+        {% if fitness_hours %}
+            {{ fitness_hours }}h
+        {% endif %}
+
+        {% if fitness_minutes %}
+            {{ fitness_minutes }}m
+        {% endif %}
+
+        {% if not fitness_hours and not fitness_minutes %}
+            0m
+        {% endif %}
+    </p>
+
+
+    <p>
+        <strong>Goal:</strong>
+
+        {% if fitness_goal_hours %}
+            {{ fitness_goal_hours }}h
+        {% endif %}
+
+        {% if fitness_goal_minutes %}
+            {{ fitness_goal_minutes }}m
+        {% endif %}
+    </p>
+
+
+    <div class="progress-wrapper">
+
+        <div class="progress-container">
+
+           <div class="progress-bar fitness-progress-bar"
+                 data-progress="{{ fitness_goal_percentage }}">
+            </div>
+
+        </div>
+
+    </div>
+    <script>
+
+const fitnessProgressBar =
+    document.querySelector(".fitness-progress-bar");
+
+if (fitnessProgressBar) {
+
+    const progress =
+        fitnessProgressBar.dataset.progress;
+
+    fitnessProgressBar.style.width =
+        progress + "%";
+
+}
+
+</script>
+
+    <p>
+        {{ fitness_goal_message }}
+    </p>
+
+
+    <a href="{% url 'fitness' %}">
+        Open Fitness Tracker
+    </a>
 
 </div>
-
 
 <div class="dashboard-card">
 
     <h4>📚 Study</h4>
-    <p>Track your focus time and productivity.</p>
+
+    <p>
+        Track your study time and stay consistent!
+    </p>
+
+    {% if total_study_minutes %}
+
+        <p>
+            <strong>
+                {% if study_hours %}
+                    {{ study_hours }}h
+                {% endif %}
+
+                {% if study_minutes %}
+                    {{ study_minutes }}m
+                {% endif %}
+            </strong>
+        </p>
+
+    {% else %}
+
+        <p>
+            No study sessions yet.
+        </p>
+
+    {% endif %}
+
+
+    <p>
+        <strong>Goal:</strong>
+
+        {% if study_goal_hours %}
+            {{ study_goal_hours }}h
+        {% endif %}
+
+        {% if study_goal_minutes %}
+            {{ study_goal_minutes }}m
+        {% endif %}
+
+        {{ study_goal_type }}
+    </p>
+
+
+    <div class="progress-wrapper">
+
+    <div class="progress-container">
+
+        <div class="progress-bar study-progress-bar"
+             data-progress="{{ study_goal_percentage }}">
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const studyProgressBar =
+    document.querySelector(".study-progress-bar");
+
+if (studyProgressBar) {
+
+    const progress =
+        studyProgressBar.dataset.progress;
+
+    studyProgressBar.style.width =
+        progress + "%";
+
+}
+
+</script>
+
+    <p>
+        {{ study_goal_message }}
+    </p>
+
+
+    <a href="{% url 'study' %}">
+        Open Study Tracker
+    </a>
 
 </div>
 
@@ -156,7 +315,14 @@ if (progressBar) {
 <div class="dashboard-card">
 
     <h4>📝 Reflection</h4>
-    <p>Write thoughts, goals, and daily reflections.</p>
+
+    <p>
+        Write down what's on your mind.
+    </p>
+
+    <a href="{% url 'reflection' %}">
+        Open Reflection
+    </a>
 
 </div>
 

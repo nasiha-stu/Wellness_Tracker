@@ -1,0 +1,144 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Delete Reflection
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+.delete-reflection-page {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.delete-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.delete-card h2 {
+    margin-top: 0;
+}
+
+.delete-message {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+
+/* Reflection preview */
+
+.reflection-preview {
+    background-color: #f7faf7;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.reflection-preview .feeling {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.reflection-preview .text {
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+
+/* Buttons */
+
+.delete-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.delete-actions button,
+.delete-actions a {
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.delete-button {
+    background-color: #f8eaea;
+    color: #9b4d4d;
+    border: 1px solid #eccccc;
+}
+
+.cancel-button {
+    background-color: #eef7ee;
+    color: #4f6f52;
+    border: 1px solid #d5e6d5;
+}
+
+.delete-actions form {
+    margin: 0;
+}
+
+</style>
+
+
+<div class="delete-reflection-page">
+
+    <div class="delete-card">
+
+        <h2>🗑️ Delete Reflection</h2>
+
+        <p class="delete-message">
+            Are you sure you want to delete this reflection?
+            This action cannot be undone.
+        </p>
+
+
+        <div class="reflection-preview">
+
+            <div class="feeling">
+                {{ reflection.get_feeling_display }}
+            </div>
+
+            <div class="text">
+                {{ reflection.text }}
+            </div>
+
+        </div>
+
+
+        <div class="delete-actions">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="delete-button">
+                    🗑️ Yes, Delete
+                </button>
+
+            </form>
+
+
+            <a
+                href="{% url 'previous_reflections' %}"
+                class="cancel-button">
+                ← Cancel
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

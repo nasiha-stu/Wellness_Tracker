@@ -1,0 +1,188 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Reflection
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+.reflection-page {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.reflection-page h2 {
+    margin-bottom: 5px;
+}
+
+.reflection-intro {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+
+/* Quote */
+
+.quote-card {
+    background-color: #eef7ee;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.quote-card h3 {
+    margin-top: 0;
+}
+
+.quote-card p {
+    font-style: italic;
+    color: #4f6f52;
+}
+
+
+/* Reflection form */
+
+.reflection-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-section select,
+.form-section textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-family: inherit;
+}
+
+.form-section textarea {
+    resize: vertical;
+}
+
+.reflection-card button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #6b8e6b;
+    color: white;
+    font-size: 15px;
+}
+
+.reflection-card button:hover {
+    background-color: #587758;
+}
+
+
+/* Previous reflections link */
+
+.previous-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.previous-link a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #4f6f52;
+}
+
+.previous-link a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+
+<div class="reflection-page">
+
+    <h2>📝 Daily Reflection</h2>
+
+    <p class="reflection-intro">
+        Take a moment to check in with yourself.
+    </p>
+
+
+    <div class="quote-card">
+
+        <h3>🌿 Quote of the Day</h3>
+
+        <p>
+    "{{ today_quote }}"
+        </p>
+
+    </div>
+
+
+    <div class="reflection-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+
+
+            <div class="form-section">
+
+                <label>
+                    How are you feeling today?
+                </label>
+
+                {{ form.feeling }}
+
+            </div>
+
+
+            <div class="form-section">
+
+                <label>
+                    What's on your mind?
+                </label>
+
+                {{ form.text }}
+
+            </div>
+
+
+            <button type="submit">
+                Save Reflection
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="previous-link">
+
+        <a href="{% url 'previous_reflections' %}">
+            📖 View Previous Reflections →
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,9 +1,9 @@
+
 {% extends "tracker/layout.html" %}
 
 {% block title %}
 Login
 {% endblock %}
-
 
 {% block content %}
 
@@ -12,6 +12,10 @@ Login
 <form method="POST">
 
     {% csrf_token %}
+
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+    {% endif %}
 
     <label>Username:</label>
     <input type="text" name="username">

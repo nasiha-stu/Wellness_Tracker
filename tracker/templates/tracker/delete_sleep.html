@@ -4,35 +4,289 @@
 Delete Sleep
 {% endblock %}
 
-
 {% block content %}
 
-<h2>Delete Sleep Entry</h2>
+<style>
 
-<p>
-    Are you sure you want to delete this sleep entry?
-</p>
-
-<p>
-    {{ sleep_entry.hours_slept }} hours -
-    {{ sleep_entry.quality }}
-</p>
+.delete-sleep-page {
+    max-width: 600px;
+    margin: 0 auto;
+}
 
 
-<form method="POST">
+/* =========================
+   DELETE CARD
+========================= */
 
-    {% csrf_token %}
+.delete-card {
+    background-color: white;
 
-    <button type="submit">
-        Yes, delete
-    </button>
+    padding: 30px;
 
-</form>
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+
+    text-align: center;
+}
+
+.delete-card h2 {
+    margin-top: 0;
+
+    color: #36583a;
+}
+
+.delete-message {
+
+    color: #6b786b;
+
+    margin-bottom: 25px;
+
+    line-height: 1.5;
+}
 
 
-<a href="{% url 'sleep' %}">
-    Cancel
-</a>
+/* =========================
+   SLEEP PREVIEW
+========================= */
 
+.sleep-preview {
+
+    background-color: #f7faf7;
+
+    padding: 22px;
+
+    border-radius: 12px;
+
+    margin-bottom: 25px;
+
+    text-align: center;
+}
+
+.sleep-preview .sleep-icon {
+
+    font-size: 36px;
+
+    margin-bottom: 8px;
+}
+
+.sleep-preview .sleep-type {
+
+    font-weight: bold;
+
+    color: #36583a;
+
+    font-size: 18px;
+
+    margin-bottom: 8px;
+}
+
+.sleep-preview .sleep-hours {
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+    color: #344534;
+
+    margin-bottom: 6px;
+}
+
+.sleep-preview .sleep-quality {
+
+    color: #667366;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.delete-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.delete-actions button,
+.delete-actions a {
+
+    padding: 11px 18px;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+.delete-button {
+
+    background-color: #f8eaea;
+
+    color: #9b4d4d;
+
+    border: 1px solid #eccccc;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.delete-button:hover {
+
+    background-color: #f3dddd;
+
+    transform: translateY(-1px);
+}
+
+
+.cancel-button {
+
+    background-color: #edf5ed;
+
+    color: #456748;
+
+    border: 1px solid #d9e8d9;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cancel-button:hover {
+
+    background-color: #e1eee1;
+
+    transform: translateY(-1px);
+}
+
+
+.delete-actions form {
+    margin: 0;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .delete-card {
+        padding: 20px;
+    }
+
+    .delete-actions {
+        flex-direction: column;
+    }
+
+    .delete-actions button,
+    .delete-actions a {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+}
+
+</style>
+
+
+<div class="delete-sleep-page">
+
+    <div class="delete-card">
+
+
+        <h2>🗑️ Delete Sleep Entry</h2>
+
+
+        <p class="delete-message">
+
+            Are you sure you want to delete this sleep entry?
+
+            <br>
+
+            This action cannot be undone.
+
+        </p>
+
+
+        <div class="sleep-preview">
+
+
+            <div class="sleep-icon">
+                😴
+            </div>
+
+
+            <div class="sleep-type">
+
+                {{ sleep_entry.sleep_type }}
+
+            </div>
+
+
+            <div class="sleep-hours">
+
+                {{ sleep_entry.hours_slept }} hours
+
+            </div>
+
+
+            <div class="sleep-quality">
+
+                {{ sleep_entry.quality }}
+
+            </div>
+
+
+        </div>
+
+
+        <div class="delete-actions">
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="delete-button">
+
+                    🗑️ Yes, Delete
+
+                </button>
+
+            </form>
+
+
+            <a
+                href="{% url 'sleep' %}"
+                class="cancel-button">
+
+                ← Cancel
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</div>
 
 {% endblock %}

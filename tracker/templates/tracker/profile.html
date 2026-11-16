@@ -1,31 +1,382 @@
 {% extends "tracker/layout.html" %}
 
-
 {% block title %}
-Profile
+Goals
 {% endblock %}
-
 
 {% block content %}
 
-<h2>🌱 Your Wellness Goals</h2>
+<style>
 
-<p>
-Set your daily water goal.
-</p>
+.goals-page {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.goals-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.goals-header h2 {
+    color: #36583a;
+    margin-bottom: 10px;
+}
+
+.goals-header p {
+    color: #6b7b6b;
+    margin: 0;
+}
 
 
-<form method="POST">
+/* =========================
+   GOAL CARDS
+========================= */
 
-    {% csrf_token %}
+.goal-card {
+    background-color: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
 
-    {{ form.as_p }}
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+}
 
-    <button type="submit">
-        Save Goal
-    </button>
+.goal-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
 
-</form>
+.goal-icon {
+    font-size: 28px;
+}
 
+.goal-card-header h3 {
+    margin: 0;
+    color: #36583a;
+}
+
+.goal-card-header p {
+    margin: 4px 0 0;
+    color: #7a877a;
+    font-size: 14px;
+}
+
+
+/* =========================
+   FORM FIELDS
+========================= */
+
+.goal-field {
+    margin-bottom: 18px;
+}
+
+.goal-field label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    color: #526552;
+}
+
+.goal-field input,
+.goal-field select {
+
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9e2d9;
+
+    border-radius: 10px;
+
+    background-color: #fafcf9;
+
+    color: #344534;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.goal-field input:focus,
+.goal-field select:focus {
+
+    border-color: #7c9b7e;
+
+    box-shadow:
+        0 0 0 3px rgba(124, 155, 126, 0.15);
+
+    background-color: white;
+}
+
+
+/* =========================
+   TWO COLUMN ROW
+========================= */
+
+.goal-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-goals-button {
+
+    width: 100%;
+
+    border: none;
+
+    padding: 13px 20px;
+
+    border-radius: 11px;
+
+    background-color: #557a58;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.save-goals-button:hover {
+
+    background-color: #456748;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .goal-row {
+        grid-template-columns: 1fr;
+    }
+
+    .goal-card {
+        padding: 20px;
+    }
+
+}
+
+</style>
+
+
+<div class="goals-page">
+
+
+    <div class="goals-header">
+
+        <h2>🎯 Your Wellness Goals</h2>
+
+        <p>
+            Set goals that fit your routine and adjust them whenever you need.
+        </p>
+
+    </div>
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <!-- HYDRATION -->
+
+        <div class="goal-card">
+
+            <div class="goal-card-header">
+
+                <div class="goal-icon">
+                    💧
+                </div>
+
+                <div>
+
+                    <h3>Hydration</h3>
+
+                    <p>
+                        How much water would you like to drink?
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="goal-field">
+
+                {{ form.water_goal.label_tag }}
+
+                {{ form.water_goal }}
+
+                {{ form.water_goal.errors }}
+
+            </div>
+
+        </div>
+
+
+        <!-- FITNESS -->
+
+        <div class="goal-card">
+
+            <div class="goal-card-header">
+
+                <div class="goal-icon">
+                    🏃‍♀️
+                </div>
+
+                <div>
+
+                    <h3>Fitness</h3>
+
+                    <p>
+                        Set your activity goal.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="goal-field">
+
+                {{ form.fitness_goal.label_tag }}
+
+                {{ form.fitness_goal }}
+
+                {{ form.fitness_goal.errors }}
+
+            </div>
+
+
+            <div class="goal-row">
+
+                <div class="goal-field">
+
+                    {{ form.fitness_goal_unit.label_tag }}
+
+                    {{ form.fitness_goal_unit }}
+
+                    {{ form.fitness_goal_unit.errors }}
+
+                </div>
+
+
+                <div class="goal-field">
+
+                    {{ form.fitness_goal_type.label_tag }}
+
+                    {{ form.fitness_goal_type }}
+
+                    {{ form.fitness_goal_type.errors }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDY -->
+
+        <div class="goal-card">
+
+            <div class="goal-card-header">
+
+                <div class="goal-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <h3>Study</h3>
+
+                    <p>
+                        Set a study goal that works for you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="goal-field">
+
+                {{ form.study_goal.label_tag }}
+
+                {{ form.study_goal }}
+
+                {{ form.study_goal.errors }}
+
+            </div>
+
+
+            <div class="goal-row">
+
+                <div class="goal-field">
+
+                    {{ form.study_goal_unit.label_tag }}
+
+                    {{ form.study_goal_unit }}
+
+                    {{ form.study_goal_unit.errors }}
+
+                </div>
+
+
+                <div class="goal-field">
+
+                    {{ form.study_goal_type.label_tag }}
+
+                    {{ form.study_goal_type }}
+
+                    {{ form.study_goal_type.errors }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="save-goals-button">
+
+            Save Goals 🌱
+
+        </button>
+
+
+    </form>
+
+</div>
 
 {% endblock %}

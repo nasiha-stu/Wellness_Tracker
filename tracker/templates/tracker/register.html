@@ -1,3 +1,4 @@
+
 {% extends "tracker/layout.html" %}
 
 {% block title %}
@@ -12,24 +13,30 @@ Register
 
     {% csrf_token %}
 
-   {% if form.errors %}
-        <p>Please fix the following:</p>
-        {{ form.errors }}
-    {% endif %}
-
-
     <label>Username:</label>
     {{ form.username }}
+
+    {% for error in form.username.errors %}
+        <p class="error">{{ error }}</p>
+    {% endfor %}
 
     <br>
 
     <label>Password:</label>
     {{ form.password1 }}
 
+    {% for error in form.password1.errors %}
+        <p class="error">{{ error }}</p>
+    {% endfor %}
+
     <br>
 
     <label>Confirm Password:</label>
     {{ form.password2 }}
+
+    {% for error in form.password2.errors %}
+        <p class="error">{{ error }}</p>
+    {% endfor %}
 
     <br>
 

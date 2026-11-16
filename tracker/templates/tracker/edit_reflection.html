@@ -1,0 +1,322 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Edit Reflection
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.edit-reflection-page {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.edit-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.edit-header h2 {
+    color: #36583a;
+    margin-bottom: 10px;
+}
+
+.edit-intro {
+    color: #6b786b;
+    margin: 0;
+}
+
+
+/* =========================
+   EDIT CARD
+========================= */
+
+.edit-card {
+    background-color: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-section {
+    margin-bottom: 22px;
+}
+
+.form-section label {
+    display: block;
+
+    font-weight: bold;
+
+    color: #526552;
+
+    margin-bottom: 8px;
+}
+
+.form-section select,
+.form-section textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px;
+
+    border: 1px solid #d9e2d9;
+
+    border-radius: 10px;
+
+    background-color: #fafcf9;
+
+    color: #344534;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-section select:focus,
+.form-section textarea:focus {
+
+    border-color: #7c9b7e;
+
+    box-shadow:
+        0 0 0 3px rgba(124, 155, 126, 0.15);
+
+    background-color: white;
+}
+
+.form-section textarea {
+    resize: vertical;
+    min-height: 180px;
+}
+
+
+/* =========================
+   ERROR MESSAGE
+========================= */
+
+.form-errors {
+
+    background-color: #fff4f2;
+
+    border: 1px solid #f0c9c3;
+
+    color: #8a4b43;
+
+    padding: 12px 15px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.edit-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+.save-button {
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    background-color: #557a58;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.save-button:hover {
+
+    background-color: #456748;
+
+    transform: translateY(-1px);
+}
+
+.cancel-button {
+
+    padding: 11px 18px;
+
+    border-radius: 11px;
+
+    text-decoration: none;
+
+    background-color: #edf5ed;
+
+    color: #456748;
+
+    border: 1px solid #d9e8d9;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cancel-button:hover {
+
+    background-color: #e1eee1;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .edit-card {
+        padding: 20px;
+    }
+
+    .edit-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .save-button,
+    .cancel-button {
+        text-align: center;
+    }
+
+}
+
+</style>
+
+
+<div class="edit-reflection-page">
+
+
+    <div class="edit-header">
+
+        <h2>✏️ Edit Reflection</h2>
+
+        <p class="edit-intro">
+            Make changes to your reflection below.
+        </p>
+
+    </div>
+
+
+    <div class="edit-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            {% if form.errors %}
+
+                <div class="form-errors">
+
+                    Please check your reflection and try again.
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="form-section">
+
+                <label>
+                    How are you feeling?
+                </label>
+
+                {{ form.feeling }}
+
+            </div>
+
+
+            <div class="form-section">
+
+                <label>
+                    What's on your mind?
+                </label>
+
+                {{ form.text }}
+
+            </div>
+
+
+            <div class="edit-actions">
+
+                <button
+                    type="submit"
+                    class="save-button">
+
+                    💾 Save Changes
+
+                </button>
+
+
+                <a
+                    href="{% url 'previous_reflections' %}"
+                    class="cancel-button">
+
+                    ← Cancel
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

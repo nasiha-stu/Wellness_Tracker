@@ -1,0 +1,527 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Study Tracker
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.study-page {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.study-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.study-header h2 {
+    color: #36583a;
+    margin-bottom: 10px;
+}
+
+.study-header p {
+    color: #6b786b;
+    margin: 0;
+}
+
+
+/* =========================
+   ADD STUDY CARD
+========================= */
+
+.study-form-card {
+    background-color: white;
+
+    padding: 28px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+
+    margin-bottom: 35px;
+}
+
+.study-form-card h3 {
+    color: #36583a;
+
+    margin-top: 0;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.study-form-card p {
+    margin-bottom: 16px;
+}
+
+.study-form-card label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+
+    color: #526552;
+}
+
+.study-form-card input,
+.study-form-card select {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9e2d9;
+
+    border-radius: 10px;
+
+    background-color: #fafcf9;
+
+    color: #344534;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.study-form-card input:focus,
+.study-form-card select:focus {
+
+    border-color: #7c9b7e;
+
+    box-shadow:
+        0 0 0 3px rgba(124, 155, 126, 0.15);
+
+    background-color: white;
+}
+
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.save-study-button {
+
+    width: 100%;
+
+    padding: 13px 20px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background-color: #557a58;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.save-study-button:hover {
+
+    background-color: #456748;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   ENTRIES HEADER
+========================= */
+
+.entries-header {
+    margin-bottom: 20px;
+}
+
+.entries-header h3 {
+    color: #36583a;
+
+    margin-bottom: 5px;
+}
+
+.entries-header p {
+    color: #7a877a;
+
+    margin: 0;
+}
+
+
+/* =========================
+   STUDY ENTRY
+========================= */
+
+.study-entry {
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+
+.study-entry-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.study-icon {
+
+    font-size: 30px;
+
+    min-width: 35px;
+}
+
+
+.study-entry h4 {
+
+    margin: 0;
+
+    color: #36583a;
+
+    font-size: 18px;
+}
+
+
+.study-date {
+
+    margin: 4px 0 0;
+
+    color: #7a877a;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   STUDY INFO
+========================= */
+
+.study-info {
+
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #edf1ed;
+}
+
+
+.study-info strong {
+
+    display: block;
+
+    font-size: 22px;
+
+    color: #344534;
+
+    margin-bottom: 4px;
+}
+
+
+.study-info span {
+
+    color: #7a877a;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.study-actions {
+
+    margin-top: 18px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.edit-button,
+.delete-button {
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    padding: 9px 15px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.edit-button {
+
+    background-color: #edf5ed;
+
+    color: #456748;
+
+    border: 1px solid #d9e8d9;
+}
+
+.edit-button:hover {
+
+    background-color: #e1eee1;
+
+    transform: translateY(-1px);
+}
+
+
+.delete-button {
+
+    background-color: #f8eaea;
+
+    color: #9b4d4d;
+
+    border: 1px solid #eccccc;
+}
+
+.delete-button:hover {
+
+    background-color: #f3dddd;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-study {
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #748074;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .study-form-card,
+    .study-entry {
+        padding: 20px;
+    }
+
+    .study-actions {
+        flex-direction: column;
+    }
+
+    .edit-button,
+    .delete-button {
+        text-align: center;
+    }
+
+}
+
+</style>
+
+
+<div class="study-page">
+
+
+    <!-- HEADER -->
+
+    <div class="study-header">
+
+        <h2>📚 Study Tracker</h2>
+
+        <p>
+            Track your study time and build consistent learning habits.
+        </p>
+
+    </div>
+
+
+    <!-- ADD STUDY SESSION -->
+
+    <div class="study-form-card">
+
+        <h3>📚 Add Study Session</h3>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+
+            <button
+                type="submit"
+                class="save-study-button">
+
+                Add Study Session 📚
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- STUDY SESSIONS -->
+
+    <div class="entries-header">
+
+        <h3>Your Study Sessions 📚</h3>
+
+        <p>
+            Keep track of your learning and stay consistent.
+        </p>
+
+    </div>
+
+
+    {% for entry in study_entries %}
+
+        <div class="study-entry">
+
+
+            <div class="study-entry-header">
+
+
+                <div class="study-icon">
+                    📚
+                </div>
+
+
+                <div>
+
+                    <h4>
+                        {{ entry.subject|title }}
+                    </h4>
+
+                    <p class="study-date">
+
+                        {{ entry.date|date:"M. d, Y, g:i a" }}
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="study-info">
+
+                <strong>
+
+                    {{ entry.duration_display }}
+
+                </strong>
+
+                <span>
+                    Study time
+                </span>
+
+            </div>
+
+
+            <div class="study-actions">
+
+
+                <a
+                    href="{% url 'edit_study' entry.id %}"
+                    class="edit-button">
+
+                    ✏️ Edit
+
+                </a>
+
+
+                <a
+                    href="{% url 'delete_study' entry.id %}"
+                    class="delete-button">
+
+                    🗑️ Delete
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    {% empty %}
+
+
+        <div class="empty-study">
+
+            📚 No study sessions yet.
+
+            <br>
+
+            Add your first study session above!
+
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+{% endblock %}

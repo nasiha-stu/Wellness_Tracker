@@ -4,112 +4,190 @@
 Hydration
 {% endblock %}
 
-
 {% block content %}
-
-<h2>💧 Hydration Tracker</h2>
-
-<p>Track your daily water intake.</p>
-
-
-<form method="POST">
-
-    {% csrf_token %}
-
-    {{ form.as_p }}
-
-    <button type="submit">
-        Save Water Intake
-    </button>
-
-</form>
-
-<hr>
-
-<h3>Today's Entries 💧</h3>
-
-{% for entry in entries %}
-
-    <div class="hydration-entry">
-
-    <div class="hydration-entry-header">
-
-        <span class="hydration-icon">
-            {% if entry.drink_type == "Water" %}
-                💧
-            {% elif entry.drink_type == "Coffee" %}
-                ☕
-            {% elif entry.drink_type == "Tea" %}
-                🍵
-            {% endif %}
-        </span>
-
-        <div>
-
-            <h4>
-                {{ entry.drink_type }}
-            </h4>
-
-            <p class="hydration-date">
-                {{ entry.date|date:"F j, Y • g:i A" }}
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="hydration-info">
-
-        <strong>
-            {{ entry.amount }} {{ entry.unit }}
-        </strong>
-
-    </div>
-
-
-    <div class="hydration-actions">
-
-        <a
-            href="{% url 'edit_hydration' entry.id %}"
-            class="edit-button"
-        >
-            ✏️ Edit
-        </a>
-
-        <a
-            href="{% url 'delete_hydration' entry.id %}"
-            class="delete-button"
-        >
-            🗑 Delete
-        </a>
-
-    </div>
-
-</div>
-
-{% empty %}
-
-    <p>No hydration entries yet.</p>
-
-{% endfor %}
 
 <style>
 
-.hydration-entry {
-    width: 50%;
-    background-color: #f8f9fa;
-    border: 1px solid #e0e0e0;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 15px;
+.hydration-page {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.hydration-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hydration-header h2 {
+    color: #36583a;
+    margin-bottom: 10px;
+}
+
+.hydration-header p {
+    color: #6b786b;
+    margin: 0;
+}
+
+
+/* =========================
+   ADD WATER CARD
+========================= */
+
+.hydration-form-card {
+    background-color: white;
+
+    padding: 28px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+
+    margin-bottom: 35px;
+}
+
+.hydration-form-card h3 {
+    color: #36583a;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.hydration-form-card p {
+    margin-bottom: 16px;
+}
+
+.hydration-form-card label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    color: #526552;
+}
+
+.hydration-form-card input,
+.hydration-form-card select {
+
+    width: 100%;
+
     box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9e2d9;
+
+    border-radius: 10px;
+
+    background-color: #fafcf9;
+
+    color: #344534;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.hydration-form-card input:focus,
+.hydration-form-card select:focus {
+
+    border-color: #7c9b7e;
+
+    box-shadow:
+        0 0 0 3px rgba(124, 155, 126, 0.15);
+
+    background-color: white;
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-water-button {
+
+    width: 100%;
+
+    padding: 13px 20px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background-color: #557a58;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.save-water-button:hover {
+
+    background-color: #456748;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   ENTRIES HEADER
+========================= */
+
+.entries-header {
+    margin-bottom: 20px;
+}
+
+.entries-header h3 {
+    color: #36583a;
+    margin-bottom: 5px;
+}
+
+.entries-header p {
+    color: #7a877a;
+    margin: 0;
+}
+
+
+/* =========================
+   ENTRY CARD
+========================= */
+
+.hydration-entry {
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
 }
 
 
 .hydration-entry-header {
+
     display: flex;
+
     align-items: center;
+
     gap: 12px;
 }
 
@@ -120,53 +198,302 @@ Hydration
 
 
 .hydration-entry h4 {
+
     margin: 0;
+
+    color: #36583a;
+
     font-size: 18px;
 }
 
 
 .hydration-date {
+
     margin: 4px 0 0;
-    color: #777;
+
+    color: #7a877a;
+
     font-size: 14px;
 }
 
 
 .hydration-info {
-    margin-top: 15px;
+
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #edf1ed;
 }
 
 
 .hydration-info strong {
+
     font-size: 22px;
+
+    color: #344534;
 }
 
 
+/* =========================
+   ACTION BUTTONS
+========================= */
+
 .hydration-actions {
+
     margin-top: 18px;
+
     display: flex;
+
     gap: 10px;
 }
 
 
 .edit-button,
 .delete-button {
+
+    display: inline-block;
+
     text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 8px;
+
+    padding: 9px 15px;
+
+    border-radius: 10px;
+
     font-size: 14px;
+
+    font-weight: bold;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 
 .edit-button {
-    background-color: #e8f0fe;
+
+    background-color: #edf5ed;
+
+    color: #456748;
+
+    border: 1px solid #d9e8d9;
+}
+
+
+.edit-button:hover {
+
+    background-color: #e1eee1;
+
+    transform: translateY(-1px);
 }
 
 
 .delete-button {
-    background-color: #fde8e8;
+
+    background-color: #f8eaea;
+
+    color: #9b4d4d;
+
+    border: 1px solid #eccccc;
+}
+
+
+.delete-button:hover {
+
+    background-color: #f3dddd;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-hydration {
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #748074;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .hydration-form-card,
+    .hydration-entry {
+        padding: 20px;
+    }
+
+    .hydration-actions {
+        flex-direction: column;
+    }
+
+    .edit-button,
+    .delete-button {
+        text-align: center;
+    }
+
 }
 
 </style>
+
+
+<div class="hydration-page">
+
+
+    <!-- HEADER -->
+
+    <div class="hydration-header">
+
+        <h2>💧 Hydration Tracker</h2>
+
+        <p>
+            Track your daily water intake and stay hydrated.
+        </p>
+
+    </div>
+
+
+    <!-- ADD WATER -->
+
+    <div class="hydration-form-card">
+
+        <h3>💧 Add Water Intake</h3>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+
+            <button
+                type="submit"
+                class="save-water-button">
+
+                Save Water Intake 💧
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- TODAY'S ENTRIES -->
+
+    <div class="entries-header">
+
+        <h3>Today's Entries 💧</h3>
+
+        <p>
+            Your hydration entries for today.
+        </p>
+
+    </div>
+
+
+    {% for entry in entries %}
+
+        <div class="hydration-entry">
+
+
+            <div class="hydration-entry-header">
+
+                <span class="hydration-icon">
+
+                    {% if entry.drink_type == "Water" %}
+                        💧
+                    {% elif entry.drink_type == "Coffee" %}
+                        ☕
+                    {% elif entry.drink_type == "Tea" %}
+                        🍵
+                    {% endif %}
+
+                </span>
+
+
+                <div>
+
+                    <h4>
+                        {{ entry.drink_type }}
+                    </h4>
+
+                    <p class="hydration-date">
+                        {{ entry.date|date:"F j, Y • g:i A" }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="hydration-info">
+
+                <strong>
+                    {{ entry.amount }} {{ entry.unit }}
+                </strong>
+
+            </div>
+
+
+            <div class="hydration-actions">
+
+                <a
+                    href="{% url 'edit_hydration' entry.id %}"
+                    class="edit-button">
+
+                    ✏️ Edit
+
+                </a>
+
+
+                <a
+                    href="{% url 'delete_hydration' entry.id %}"
+                    class="delete-button">
+
+                    🗑️ Delete
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    {% empty %}
+
+
+        <div class="empty-hydration">
+
+            💧 No hydration entries yet.
+
+            <br>
+
+            Start tracking your water intake above!
+
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
 
 {% endblock %}

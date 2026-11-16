@@ -1,0 +1,517 @@
+{% extends "tracker/layout.html" %}
+
+{% block title %}
+Fitness
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.fitness-page {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.fitness-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.fitness-header h2 {
+    color: #36583a;
+    margin-bottom: 10px;
+}
+
+.fitness-header p {
+    color: #6b786b;
+    margin: 0;
+}
+
+
+/* =========================
+   ADD ACTIVITY CARD
+========================= */
+
+.fitness-form-card {
+    background-color: white;
+
+    padding: 28px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+
+    margin-bottom: 35px;
+}
+
+.fitness-form-card h3 {
+    color: #36583a;
+
+    margin-top: 0;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.fitness-form-card p {
+    margin-bottom: 16px;
+}
+
+.fitness-form-card label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+
+    color: #526552;
+}
+
+.fitness-form-card input,
+.fitness-form-card select {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9e2d9;
+
+    border-radius: 10px;
+
+    background-color: #fafcf9;
+
+    color: #344534;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.fitness-form-card input:focus,
+.fitness-form-card select:focus {
+
+    border-color: #7c9b7e;
+
+    box-shadow:
+        0 0 0 3px rgba(124, 155, 126, 0.15);
+
+    background-color: white;
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-fitness-button {
+
+    width: 100%;
+
+    padding: 13px 20px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background-color: #557a58;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.save-fitness-button:hover {
+
+    background-color: #456748;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   ENTRIES HEADER
+========================= */
+
+.entries-header {
+    margin-bottom: 20px;
+}
+
+.entries-header h3 {
+    color: #36583a;
+
+    margin-bottom: 5px;
+}
+
+.entries-header p {
+    color: #7a877a;
+
+    margin: 0;
+}
+
+
+/* =========================
+   FITNESS ENTRY
+========================= */
+
+.fitness-entry {
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+
+.fitness-entry-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.fitness-icon {
+
+    font-size: 30px;
+
+    min-width: 35px;
+}
+
+
+.fitness-entry h4 {
+
+    margin: 0;
+
+    color: #36583a;
+
+    font-size: 18px;
+}
+
+
+.fitness-date {
+
+    margin: 4px 0 0;
+
+    color: #7a877a;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   FITNESS INFO
+========================= */
+
+.fitness-info {
+
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #edf1ed;
+}
+
+
+.fitness-info strong {
+
+    font-size: 22px;
+
+    color: #344534;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.fitness-actions {
+
+    margin-top: 18px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.edit-button,
+.delete-button {
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    padding: 9px 15px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.edit-button {
+
+    background-color: #edf5ed;
+
+    color: #456748;
+
+    border: 1px solid #d9e8d9;
+}
+
+.edit-button:hover {
+
+    background-color: #e1eee1;
+
+    transform: translateY(-1px);
+}
+
+
+.delete-button {
+
+    background-color: #f8eaea;
+
+    color: #9b4d4d;
+
+    border: 1px solid #eccccc;
+}
+
+.delete-button:hover {
+
+    background-color: #f3dddd;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-fitness {
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #748074;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .fitness-form-card,
+    .fitness-entry {
+        padding: 20px;
+    }
+
+    .fitness-actions {
+        flex-direction: column;
+    }
+
+    .edit-button,
+    .delete-button {
+        text-align: center;
+    }
+
+}
+
+</style>
+
+
+<div class="fitness-page">
+
+
+    <!-- HEADER -->
+
+    <div class="fitness-header">
+
+        <h2>🏃‍♀️ Fitness Tracker</h2>
+
+        <p>
+            Track your physical activity and keep moving!
+        </p>
+
+    </div>
+
+
+    <!-- ADD ACTIVITY -->
+
+    <div class="fitness-form-card">
+
+        <h3>🏃‍♀️ Add Activity</h3>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+
+            <button
+                type="submit"
+                class="save-fitness-button">
+
+                Add Activity 🏃‍♀️
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ACTIVITIES -->
+
+    <div class="entries-header">
+
+        <h3>Your Activities 🏃‍♀️</h3>
+
+        <p>
+            Keep track of your movement and stay consistent.
+        </p>
+
+    </div>
+
+
+    {% if entries %}
+
+        {% for entry in entries %}
+
+            <div class="fitness-entry">
+
+
+                <div class="fitness-entry-header">
+
+
+                    <div class="fitness-icon">
+
+                        {{ entry.get_activity_display|slice:":2" }}
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            {{ entry.activity }}
+                        </h4>
+
+                        <p class="fitness-date">
+
+                            {{ entry.date|date:"F d, Y • h:i A" }}
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="fitness-info">
+
+                    <strong>
+
+                        {{ entry.duration }} {{ entry.unit }}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="fitness-actions">
+
+
+                    <a
+                        href="{% url 'edit_fitness' entry.id %}"
+                        class="edit-button">
+
+                        ✏️ Edit
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'delete_fitness' entry.id %}"
+                        class="delete-button">
+
+                        🗑️ Delete
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="empty-fitness">
+
+            🏃‍♀️ No fitness activities yet.
+
+            <br>
+
+            Add your first activity above!
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

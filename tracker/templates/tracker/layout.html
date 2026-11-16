@@ -1,48 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Wellness Tracker{% endblock %}</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Wellness Tracker{% endblock %}
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background-color: #f4f8f4;
+
+            color: #344534;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+
+            background-color: white;
+
+            padding: 20px 40px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.06);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+
+        .header-container {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo {
+
+            text-decoration: none;
+
+            color: #496b4b;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        .logo:hover {
+
+            color: #36583a;
+        }
+
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        nav {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+
+        nav a {
+
+            text-decoration: none;
+
+            color: #526552;
+
+            padding: 9px 14px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        nav a:hover {
+
+            background-color: #edf5ed;
+
+            color: #36583a;
+        }
+
+
+        /* Logout */
+
+        .logout-link {
+
+            color: #9b5c5c;
+        }
+
+
+        .logout-link:hover {
+
+            background-color: #faeeee;
+
+            color: #874747;
+        }
+
+
+        /* =========================
+           MAIN CONTENT
+        ========================= */
+
+        main {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 40px 25px 60px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                padding: 18px 20px;
+            }
+
+
+            .header-container {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            nav {
+
+                width: 100%;
+            }
+
+
+            nav a {
+
+                font-size: 13px;
+
+                padding: 8px 11px;
+            }
+
+
+            main {
+
+                padding: 30px 15px 50px;
+            }
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <header>
-        <h1>🌱 Wellness Tracker</h1>
 
-    
-<nav>
+<header>
 
-    <a href="{% url 'home' %}">Home</a>
+    <div class="header-container">
 
-    {% if user.is_authenticated %}
 
-    |
-    <a href="{% url 'dashboard' %}">Dashboard</a>
-    |
-    <a href="{% url 'profile' %}">Goals</a>
-    |
-    <a href="{% url 'logout' %}">Logout</a>
+        <a
+            href="{% url 'home' %}"
+            class="logo">
 
-{% else %}
+            🌱 Wellness Tracker
 
-        |
-        <a href="{% url 'register' %}">Register</a>
-        |
-        <a href="{% url 'login' %}">Login</a>
+        </a>
 
-    {% endif %}
 
-</nav>
-        <hr>
-    </header>
+        <nav>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'dashboard' %}">
+                    Dashboard
+                </a>
+
+                <a href="{% url 'profile' %}">
+                    Goals
+                </a>
+
+                <a href="{% url 'reflection' %}">
+                    Reflection
+                </a>
+
+                <a
+                    href="{% url 'logout' %}"
+                    class="logout-link">
+
+                    Logout
+
+                </a>
+
+
+            {% else %}
+
+                <a href="{% url 'register' %}">
+                    Register
+                </a>
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
 
 </body>
-</html>
 
+</html>
